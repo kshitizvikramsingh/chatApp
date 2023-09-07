@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello from Basic Chat App!</h1>
+
+    
+    <form action="">
+        <input name="name" type="text">
+        <button type="submit">Submit</button>
+    </form>
+    <ul>
+        
+    </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        
+        const socket=io("http://localhost:8000")
+        //console.log(socket)
+        socket.on("connect",()=>{
+            console.log(socket.id)
+            
+        })
+        const ul=document.querySelector("ul")
+        
+            socket.on("messageFromServer",(d)=>{
+           console.log("message from server"+d)
+            
+            })
+       
+        const form=document.querySelector("form")
+        const input=document.querySelector("input")
+        const p=document.querySelector("p")
+       socket.on("messageToClients",(msg)=>{
+        let li=document.createElement("li")
+            li.textContent=msg
+            ul.appendChild(li)
+       })
+        form.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            
+            let data=input.value
+            socket.emit("messageFromClient",({data}))
+            // let li=document.createElement("li")
+            // li.textContent=data
+            // ul.appendChild(li)
+           
+            
+        })
+        
+    </script>
+    
+</body>
+</html>
